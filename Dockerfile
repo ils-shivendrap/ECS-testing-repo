@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base
-FROM node:18
+FROM public.ecr.aws/docker/library/node:hydrogen-slim
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
