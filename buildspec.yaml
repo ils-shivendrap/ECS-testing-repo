@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - aws ecr-public get-login-password --region us-east-1
+      # - aws ecr-public get-login-password --region us-east-1
       # | docker login --username AWS --password-stdin 730335213218.dkr.ecr.us-east-1.amazonaws.com
       - REPOSITORY_URI=730335213218.dkr.ecr.us-east-1.amazonaws.com/ecs-testing-shivendra
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
@@ -20,8 +20,8 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      # - docker push $REPOSITORY_URI:latest
-      - aws ecr-public get-login-password --region us-east-1
+      - docker push $REPOSITORY_URI:latest      
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 730335213218.dkr.ecr.us-east-1.amazonaws.com
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"node-hello-world","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
