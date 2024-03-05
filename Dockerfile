@@ -12,7 +12,7 @@ COPY index.js ./
 RUN npm install
 
 # Expose port 3000 where the application will listen
-EXPOSE 3000
+EXPOSE 80
 
 # Start the application by running the Node.js script
 CMD [ "node", "index.js" ]
