@@ -21,6 +21,7 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
       # - docker push $REPOSITORY_URI:latest
+      - aws ecr-public get-login-password --region us-east-1
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"node-hello-world","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
